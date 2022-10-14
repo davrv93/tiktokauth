@@ -1,4 +1,4 @@
-const ENDPOINT = 'http://localhost:5000'
+const ENDPOINT = 'http://198.199.78.59:5000'
 
 const TEXT_BYTE_LIMIT = 300
 const textEncoder = new TextEncoder()
