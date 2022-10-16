@@ -97,21 +97,17 @@ const submitForm = () => {
         bodyFormData.append('text_speaker', voice);
         bodyFormData.append('session_id', 'c1ec07afdb432ba4d3bcf23b96074abb');
 
-
-        axios(generate_url, {
+       axios(generate_url, {
             method: 'POST',
             mode: 'no-cors',
-            headers: {
-                'Access-Control-Allow-Origin': 'https://davrv93.github.io',
-                'Access-Control-Allow-Methods': '*',
-                'Access-Control-Allow-Headers': 'X-Requested-With',
-                'Content-Type': 'multipart/form-data',
-            },
+
 
             data: bodyFormData,
+
             //withCredentials: true,
             credentials: 'same-origin',
         }).then(response => {
+           
             console.log(response)
             setAudio(response.data.b64d, text);
         }).catch(error => {
