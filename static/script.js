@@ -85,7 +85,7 @@ const submitForm = () => {
 
     try {
         const req = new XMLHttpRequest()
-        generate_url = `${ENDPOINT}/api/generate/`;
+        generate_url = `${ENDPOINT}/api/generate`;
         console.log('test', JSON.stringify({
             req_text: text,
             text_speaker: voice,
