@@ -1,4 +1,4 @@
-const ENDPOINT = 'http://198.199.78.59:5000'
+const ENDPOINT = 'https://erp.upeu.edu.pe/flask'
 
 const TEXT_BYTE_LIMIT = 300
 const textEncoder = new TextEncoder()
