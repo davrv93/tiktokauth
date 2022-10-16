@@ -7,25 +7,6 @@ window.onload = () => {
     document.getElementById('charcount').textContent = `0/${TEXT_BYTE_LIMIT}`
     const req = new XMLHttpRequest()
     enableControls();
-
-    /*
-    req.open('GET', `${ENDPOINT}/api/status`, false)
-    req.send()
-
-    let resp = JSON.parse(req.responseText)
-    if (resp.data) {
-        if (resp.data.available) {
-            console.info(`${resp.data.meta.dc} (age ${resp.data.meta.age} minutes) is able to provide service`)
-            enableControls()
-        } else {
-            console.error(`${resp.data.meta.dc} (age ${resp.data.meta.age} minutes) is unable to provide service`)
-            setError(
-                `Service not available${resp.data.message && resp.data.message.length > 1 ? ` (<b>"${resp.data.message}"</b>)` : ''}, try again later or check the <a href='https://github.com/Weilbyte/tiktok-tts'>GitHub</a> repository for more info`
-                )
-        }
-    } else {
-        setError('Error querying API status, try again later or check the <a href=\'https://github.com/Weilbyte/tiktok-tts\'>GitHub</a> repository for more info')
-    }  */
 }
 
 const setError = (message) => {
@@ -40,6 +21,7 @@ const clearError = () => {
 }
 
 const setAudio = (base64, text) => {
+    console.log(`data:audio/mpeg;base64,${base64}`);
     document.getElementById('success').style.display = 'block'
     document.getElementById('audio').src = `data:audio/mpeg;base64,${base64}`
     document.getElementById('generatedtext').innerHTML = `"${text}"`
@@ -103,7 +85,7 @@ const submitForm = () => {
 
     try {
         const req = new XMLHttpRequest()
-        generate_url = `${ENDPOINT}/api/generate`;
+        generate_url = `${ENDPOINT}/api/generate/`;
         console.log('test', JSON.stringify({
             req_text: text,
             text_speaker: voice,
@@ -119,35 +101,25 @@ const submitForm = () => {
         axios(generate_url, {
             method: 'POST',
             mode: 'no-cors',
-
+            headers: {
+                'Access-Control-Allow-Origin': 'http://localhost:8001',
+                'Access-Control-Allow-Methods': '*',
+                'Access-Control-Allow-Headers': 'X-Requested-With',
+                'Content-Type': 'multipart/form-data',
+            },
 
             data: bodyFormData,
-
             //withCredentials: true,
             credentials: 'same-origin',
         }).then(response => {
             console.log(response)
+            setAudio(response.data.b64d, text);
         }).catch(error => {
-            console.log(error.response)
+            setError(`<b>Generation failed</b><br/> ("${resp.error}")`);
         });
 
-        /*
 
-      req.open('POST', `${ENDPOINT}/api/generate`, false)
-      req.setRequestHeader('Content-Type', 'application/json')
-      req.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-      req.setRequestHeader('Access-Control-Allow-Origin', '*');
-      req.send(JSON.stringify({
-          text: text,
-          voice: voice
-      }))
 
-      let resp = JSON.parse(req.responseText)
-      if (resp.data === null) {
-          setError(`<b>Generation failed</b><br/> ("${resp.error}")`)
-      } else {
-          setAudio(resp.data, text)
-      }*/
     } catch {
         setError('Error submitting form (printed to F12 console)')
         console.log('^ Please take a screenshot of this and create an issue on the GitHub repository if one does not already exist :)')
