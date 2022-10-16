@@ -123,7 +123,7 @@ const submitForm = () => {
 
             data: bodyFormData,
 
-            withCredentials: true,
+            //withCredentials: true,
             credentials: 'same-origin',
         }).then(response => {
             console.log(response)
