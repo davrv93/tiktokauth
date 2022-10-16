@@ -102,7 +102,7 @@ const submitForm = () => {
             method: 'POST',
             mode: 'no-cors',
             headers: {
-                'Access-Control-Allow-Origin': 'http://localhost:8001',
+                'Access-Control-Allow-Origin': 'https://davrv93.github.io',
                 'Access-Control-Allow-Methods': '*',
                 'Access-Control-Allow-Headers': 'X-Requested-With',
                 'Content-Type': 'multipart/form-data',
